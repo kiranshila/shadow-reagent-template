@@ -1,0 +1,18 @@
+; Classpath setup
+{:source-paths["src"]
+
+; Deps vector, following lein deps syntax
+; Things like clojure, cljs, etc. are already included
+ :dependencies [[reagent "1.0.0-rc1" :exclusions [cljsjs/react cljsjs/react-dom]]]
+
+ :builds {:app {:target :browser ; Sets shadow's options for browser-based clients
+                :output-dir "public/js" ; Where shadow compiler output goes
+                :asset-path "js" ; The relative path from the web-server's root to the resources in :output-dir
+                ; Modules configure bundling
+                ; so module :main will generate main.js in :output-dir
+                ; :init-fn is the fully-qualified name that will run when the module is loaded
+                :modules {:main {:init-fn app.core/main}}
+                ; Enables the optional server
+                ; Will hot reload everything, including CSS
+                :devtools {:http-root "public"
+                           :http-port 3000}}}}
